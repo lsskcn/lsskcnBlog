@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>零碎时空 | 个人主题网站</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#f43f5e',
+                        accent: '#10b981',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .masonry-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                grid-gap: 20px;
+                grid-auto-flow: dense;
+            }
+            .masonry-item {
+                break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            .masonry-item-large {
+                grid-column: span 2;
+                grid-row: span 2;
+            }
+            @media (max-width: 768px) {
+                .masonry-grid {
+                    grid-template-columns: 1fr;
+                }
+                .masonry-item-large {
+                    grid-column: span 1;
+                    grid-row: span 1;
+                }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Hero Section with Animated Background -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/d96b1e7b4c744d9dae9d7e7eeb41268b~tplv-a9rns2rl98-image.image?rcl=20251109135035E0F5E34CE7DB847B2B0B&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1765259469&x-signature=TSWtMiJhcUhb%2FBb4AYkVjuCrRhU%3D" 
+                 alt="Fragmented Time Background" 
+                 class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-indigo-500/30 to-purple-600/30"></div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white/20 rounded-full animate-float"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-secondary/20 rounded-full animate-float-slow"></div>
+            <div class="absolute bottom-30 left-1/4 w-24 h-24 bg-accent/20 rounded-full animate-float-fast"></div>
+            <div class="absolute bottom-20 right-1/3 w-20 h-20 bg-primary/20 rounded-full animate-float"></div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="absolute top-0 left-0 right-0 z-50 bg-white/10 bg-blur">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-white text-shadow">零碎时空</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-white hover:text-primary transition-colors">关于</a>
+                    <a href="#timeline" class="text-white hover:text-primary transition-colors">时间线</a>
+                    <a href="#inspiration" class="text-white hover:text-primary transition-colors">灵感墙</a>
+                    <a href="#growth" class="text-white hover:text-primary transition-colors">成长轨迹</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white text-2xl">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white/90 bg-blur absolute w-full">
+                <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                    <a href="#about" class="text-gray-800 hover:text-primary transition-colors">关于</a>
+                    <a href="#timeline" class="text-gray-800 hover:text-primary transition-colors">时间线</a>
+                    <a href="#inspiration" class="text-gray-800 hover:text-primary transition-colors">灵感墙</a>
+                    <a href="#growth" class="text-gray-800 hover:text-primary transition-colors">成长轨迹</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Hero Content -->
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white text-shadow">
+                <span class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-gradient">零碎时空</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto">
+                记录每一个碎片化的灵感，拼凑成完整的思考宇宙
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="add-note-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-full transition-all transform hover:scale-105">
+                    <i class="fa fa-plus mr-2"></i>记录新灵感
+                </button>
+                <button id="view-all-btn" class="bg-white/20 hover:bg-white/30 text-white font-medium py-3 px-8 rounded-full backdrop-blur-sm transition-all transform hover:scale-105">
+                    <i class="fa fa-th-large mr-2"></i>浏览灵感墙
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">关于零碎时空</h2>
+                <div class="w-24 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-lg mb-6 text-gray-700">
+                        在这个信息爆炸的时代，我们的时间被切割成无数碎片。《零碎时空》是一个记录、管理和展示这些碎片化时间中创意灵感、学习笔记和生活思考的个人主题网站。
+                    </p>
+                    <p class="text-lg mb-6 text-gray-700">
+                        无论是通勤途中的突发奇想，还是午休时间的阅读感悟，亦或是深夜里的深刻思考，都可以在这里找到归宿。
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div class="bg-gray-100 px-6 py-3 rounded-full">
+                            <span class="font-medium">时间碎片记录</span>
+                        </div>
+                        <div class="bg-gray-100 px-6 py-3 rounded-full">
+                            <span class="font-medium">灵感墙展示</span>
+                        </div>
+                        <div class="bg-gray-100 px-6 py-3 rounded-full">
+                            <span class="font-medium">成长轨迹可视化</span>
+                        </div>
+                        <div class="bg-gray-100 px-6 py-3 rounded-full">
+                            <span class="font-medium">AI智能整理</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8cffb52c6ade49ca8d0d3443cc08c84c~tplv-a9rns2rl98-image.image?rcl=20251109135035E0F5E34CE7DB847B2B0B&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1765259471&x-signature=1ha2ReuUvCHMWTX98XU1OEs0PyM%3D" 
+                         alt="Inspiration Wall" 
+                         class="rounded-lg shadow-xl w-full">
+                    <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mr-4">
+                                <i class="fa fa-lightbulb-o text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">已记录</p>
+                                <p class="text-2xl font-bold text-primary">128+</p>
+                                <p class="text-sm text-gray-500">灵感碎片</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">时间碎片记录</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">记录每一个碎片化的灵感瞬间，让思想的火花永不熄灭</p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Timeline Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="timeline-tab active bg-primary text-white px-6 py-2 rounded-full" data-filter="all">全部</button>
+                <button class="timeline-tab bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="idea">灵感</button>
+                <button class="timeline-tab bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="note">笔记</button>
+                <button class="timeline-tab bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="thought">思考</button>
+            </div>
+            
+            <!-- Timeline Content -->
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-200"></div>
+                
+                <!-- Timeline Items -->
+                <div class="timeline-container">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item idea mb-16" data-category="idea">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+                                <span class="text-sm text-gray-500">2023年11月15日 通勤途中</span>
+                                <h3 class="text-2xl font-bold mt-2 mb-4">移动应用创意</h3>
+                                <p class="text-gray-700">
+                                    开发一款能够根据用户情绪和环境自动推荐音乐的应用，结合AI分析用户的日常活动和偏好，提供个性化的音乐体验。
+                                </p>
+                                <div class="flex justify-end mt-4">
+                                    <span class="bg-primary/10 text-primary text-sm px-4 py-1 rounded-full">创意</span>
+                                </div>
+                            </div>
+                            <div class="relative z-10">
+                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item note mb-16" data-category="note">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+                            <div class="relative z-10">
+                                <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 md:text-left mb-8 md:mb-0">
+                                <span class="text-sm text-gray-500">2023年10月28日 午休时间</span>
+                                <h3 class="text-2xl font-bold mt-2 mb-4">《原子习惯》读书笔记</h3>
+                                <p class="text-gray-700">
+                                    习惯养成的四个阶段：提示、渴望、反应和奖励。通过微小的改变和持续的积累，可以逐步建立良好的习惯，实现自我提升。
+                                </p>
+                                <div class="flex mt-4">
+                                    <span class="bg-secondary/10 text-secondary text-sm px-4 py-1 rounded-full">读书笔记</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item thought mb-16" data-category="thought">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+                                <span class="text-sm text-gray-500">2023年9月7日 深夜思考</span>
+                                <h3 class="text-2xl font-bold mt-2 mb-4">关于工作与生活平衡</h3>
+                                <p class="text-gray-700">
+                                    在数字化时代，工作与生活的界限越来越模糊。如何在追求职业成功的同时，保持身心健康和良好的人际关系，是我们每个人都需要思考的问题。
+                                </p>
+                                <div class="flex justify-end mt-4">
+                                    <span class="bg-accent/10 text-accent text-sm px-4 py-1 rounded-full">思考</span>
+                                </div>
+                            </div>
+                            <div class="relative z-10">
+                                <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white">
+                                    <i class="fa fa-comments"></i>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="text-center mt-12">
+                    <button id="load-more-btn" class="bg-white border border-gray-300 text-gray-700 font-medium py-3 px-8 rounded-full transition-all hover:bg-gray-50">
+                        加载更多 <i class="fa fa-angle-down ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inspiration Wall Section -->
+    <section id="inspiration" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">灵感墙</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">探索所有碎片化的创意和想法，发现灵感的连接</p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Filter Controls -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active bg-primary text-white px-6 py-2 rounded-full" data-filter="all">全部</button>
+                <button class="filter-btn bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="design">设计</button>
+                <button class="filter-btn bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="writing">写作</button>
+                <button class="filter-btn bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="coding">编程</button>
+                <button class="filter-btn bg-white text-gray-700 px-6 py-2 rounded-full" data-filter="travel">旅行</button>
+            </div>
+            
+            <!-- Search Box -->
+            <div class="max-w-md mx-auto mb-12">
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="搜索灵感..." class="w-full px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Masonry Grid -->
+            <div class="masonry-grid">
+                <!-- Item 1 -->
+                <div class="masonry-item card-hover bg-white rounded-xl shadow-md overflow-hidden" data-category="design">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8cffb52c6ade49ca8d0d3443cc08c84c~tplv-a9rns2rl98-image.image?rcl=20251109135035E0F5E34CE7DB847B2B0B&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1765259471&x-signature=1ha2ReuUvCHMWTX98XU1OEs0PyM%3D" 
+                         alt="Design Inspiration" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">2023年11月10日</span>
+                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">设计</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">创意工作室墙面设计</h3>
+                        <p class="text-gray-600 mb-4">利用便签、照片和草图创建一个动态变化的灵感墙，记录日常创意和想法。</p>
+                        <div class="flex justify-between items-center">
+                            <button class="text-primary hover:underline text-sm flex items-center">
+                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                            <div class="flex items-center">
+                                <span class="text-gray-400 mr-3"><i class="fa fa-heart-o"></i> 24</span>
+                                <span class="text-gray-400"><i class="fa fa-bookmark-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="masonry-item card-hover bg-white rounded-xl shadow-md overflow-hidden" data-category="writing">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">2023年10月25日</span>
+                            <span class="bg-secondary/10 text-secondary text-xs px-3 py-1 rounded-full">写作</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">短篇小说创意</h3>
+                        <p class="text-gray-600 mb-4">一个关于时间旅行者在不同时空碎片中寻找自我的故事，探讨记忆、身份和选择的意义。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">科幻</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">时间旅行</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">自我探索</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <button class="text-primary hover:underline text-sm flex items-center">
+                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                            <div class="flex items-center">
+                                <span class="text-gray-400 mr-3"><i class="fa fa-heart-o"></i> 18</span>
+                                <span class="text-gray-400"><i class="fa fa-bookmark-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="masonry-item masonry-item-large card-hover bg-white rounded-xl shadow-md overflow-hidden" data-category="coding">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/b1f2a1d7365c4937b196dfd8c23a21b4~tplv-a9rns2rl98-image.image?rcl=20251109135035E0F5E34CE7DB847B2B0B&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1765259468&x-signature=1f51CXu9c9eS1rXnXdaOxR6W%2B%2BE%3D" 
+                         alt="Coding Project" 
+                         class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">2023年9月18日</span>
+                            <span class="bg-accent/10 text-accent text-xs px-3 py-1 rounded-full">编程</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">知识图谱可视化项目</h3>
+                        <p class="text-gray-600 mb-4">使用D3.js创建一个交互式知识图谱，展示不同概念之间的关联，帮助用户发现新的知识连接。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">可视化</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">D3.js</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">知识图谱</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <button class="text-primary hover:underline text-sm flex items-center">
+                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                            <div class="flex items-center">
+                                <span class="text-gray-400 mr-3"><i class="fa fa-heart-o"></i> 32</span>
+                                <span class="text-gray-400"><i class="fa fa-bookmark-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 4 -->
+                <div class="masonry-item card-hover bg-white rounded-xl shadow-md overflow-hidden" data-category="travel">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8cffb52c6ade49ca8d0d3443cc08c84c~tplv-a9rns2rl98-image.image?rcl=20251109135035E0F5E34CE7DB847B2B0B&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1765259471&x-signature=1ha2ReuUvCHMWTX98XU1OEs0PyM%3D" 
+                         alt="Travel Inspiration" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">2023年8月5日</span>
+                            <span class="bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-full">旅行</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">旅行摄影技巧</h3>
+                        <p class="text-gray-600 mb-4">如何在旅途中捕捉最美的瞬间，包括光线利用、构图技巧和故事性表达。</p>
+                        <div class="flex justify-between items-center">
+                            <button class="text-primary hover:underline text-sm flex items-center">
+                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                            <div class="flex items-center">
+                                <span class="text-gray-400 mr-3"><i class="fa fa-heart-o"></i> 27</span>
+                                <span class="text-gray-400"><i class="fa fa-bookmark-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="masonry-item card-hover bg-white rounded-xl shadow-md overflow-hidden" data-category="design">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-500">2023年7月12日</span>
+                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">设计</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">极简主义设计原则</h3>
+                        <p class="text-gray-600 mb-4">少即是多，如何通过简洁的设计语言传达复杂的信息，提升用户体验。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">极简主义</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">UI设计</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">用户体验</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <button class="text-primary hover:underline text-sm flex items-center">
+                                查看详情 <i class="fa fa-angle-right ml-1"></i>
+                            </button>
+                            <div class="flex items-center">
+                                <span class="text-gray-400 mr-3"><i class="fa fa-heart-o"></i> 19</span>
+                                <span class="text-gray-400"><i class="fa fa-bookmark-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Section -->
+    <section id="growth" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">个人成长轨迹</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">可视化展示你在不同时间段的创作频率和主题变化</p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Growth Chart -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-12">
+                <div class="flex flex-wrap justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">创作活跃度趋势</h3>
+                    <div class="flex space-x-2">
+                        <button class="growth-period-btn active bg-primary text-white px-4 py-2 rounded-md text-sm" data-period="week">周</button>
+                        <button class="growth-period-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm" data-period="month">月</button>
+                        <button class="growth-period-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm" data-period="year">年</button>
+                    </div>
+                </div>
+                <div class="h-80">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Category Distribution -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Category Pie Chart -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-6">内容类别分布</h3>
+                    <div class="h-80 flex items-center justify-center">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- AI Insights -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-lightbulb-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">AI 智能洞察</h3>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4">
+                                <i class="fa fa-line-chart"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">创作高峰期</h4>
+                                <p class="text-gray-600">你的创作高峰期通常在晚上8点到10点之间，建议在这个时间段安排重要的创意工作。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-4">
+                                <i class="fa fa-tags"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">热门主题</h4>
+                                <p class="text-gray-600">你最近三个月的创作主要集中在"创意设计"和"个人成长"主题上，这些是你的核心兴趣领域。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mr-4">
+                                <i class="fa fa-random"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">内容关联</h4>
+                                <p class="text-gray-600">你的"极简主义设计"笔记与"知识图谱"项目存在潜在关联，建议深入探索这一交叉领域。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Note Modal -->
+    <div id="add-note-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">记录新灵感</h3>
+                    <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="add-note-form">
+                    <div class="mb-4">
+                        <label for="note-title" class="block text-gray-700 font-medium mb-2">标题</label>
+                        <input type="text" id="note-title" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="给你的灵感起个标题...">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="note-content" class="block text-gray-700 font-medium mb-2">内容</label>
+                        <textarea id="note-content" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="描述你的灵感..."></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="note-category" class="block text-gray-700 font-medium mb-2">类别</label>
+                            <select id="note-category" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="idea">灵感</option>
+                                <option value="note">笔记</option>
+                                <option value="thought">思考</option>
+                                <option value="design">设计</option>
+                                <option value="writing">写作</option>
+                                <option value="coding">编程</option>
+                                <option value="travel">旅行</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="note-time" class="block text-gray-700 font-medium mb-2">时间</label>
+                            <input type="datetime-local" id="note-time" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="note-tags" class="block text-gray-700 font-medium mb-2">标签</label>
+                        <input type="text" id="note-tags" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="用逗号分隔标签...">
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" id="cancel-note-btn" class="bg-gray-200 text-gray-700 font-medium py-2 px-6 rounded-lg mr-3">取消</button>
+                        <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">零碎时空</h3>
+                    <p class="text-gray-400 mb-6">
+                        记录每一个碎片化的灵感，拼凑成完整的思考宇宙
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-weibo text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-wechat text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">关于</a></li>
+                        <li><a href="#timeline" class="text-gray-400 hover:text-white transition-colors">时间线</a></li>
+                        <li><a href="#inspiration" class="text-gray-400 hover:text-white transition-colors">灵感墙</a></li>
+                        <li><a href="#growth" class="text-gray-400 hover:text-white transition-colors">成长轨迹</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">订阅更新</h4>
+                    <p class="text-gray-400 mb-4">
+                        订阅我们的通讯，获取最新的灵感和创意
+                    </p>
+                    <div class="flex">
+                        <input type="email" placeholder="你的邮箱地址" class="px-4 py-2 rounded-l-lg focus:outline-none flex-grow">
+                        <button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg">
+                            订阅
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 零碎时空. 保留所有权利.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">使用条款</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const addNoteBtn = document.getElementById('add-note-btn');
+        const addNoteModal = document.getElementById('add-note-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const cancelNoteBtn = document.getElementById('cancel-note-btn');
+        const addNoteForm = document.getElementById('add-note-form');
+        const viewAllBtn = document.getElementById('view-all-btn');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const searchInput = document.getElementById('search-input');
+        const timelineTabs = document.querySelectorAll('.timeline-tab');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const growthPeriodBtns = document.querySelectorAll('.growth-period-btn');
+        
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Modal Toggle
+        addNoteBtn.addEventListener('click', () => {
+            addNoteModal.classList.remove('hidden');
+        });
+        
+        closeModalBtn.addEventListener('click', () => {
+            addNoteModal.classList.add('hidden');
+        });
+        
+        cancelNoteBtn.addEventListener('click', () => {
+            addNoteModal.classList.add('hidden');
+        });
+        
+        // Close modal when clicking outside
+        addNoteModal.addEventListener('click', (e) => {
+            if (e.target === addNoteModal) {
+                addNoteModal.classList.add('hidden');
+            }
+        });
+        
+        // View All Button Scroll
+        viewAllBtn.addEventListener('click', () => {
+            document.getElementById('inspiration').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Timeline Tab Filter
+        timelineTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                timelineTabs.forEach(t => {
+                    t.classList.remove('active', 'bg-primary', 'text-white');
+                    t.classList.add('bg-white', 'text-gray-700');
+                });
+                
+                // Add active class to clicked tab
+                tab.classList.add('active', 'bg-primary', 'text-white');
+                tab.classList.remove('bg-white', 'text-gray-700');
+                
+                const filter = tab.getAttribute('data-filter');
+                
+                // Filter timeline items
+                document.querySelectorAll('.timeline-item').forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Filter Button Filter
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-primary', 'text-white');
+                    b.classList.add('bg-white', 'text-gray-700');
+                });
+                
+                // Add active class to clicked button
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                btn.classList.remove('bg-white', 'text-gray-700');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                // Filter masonry items
+                document.querySelectorAll('.masonry-item').forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Search Functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            document.querySelectorAll('.masonry-item').forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const content = item.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        
+        // Growth Period Buttons
+        growthPeriodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                growthPeriodBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-primary', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                
+                // Add active class to clicked button
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                
+                // Update chart based on selected period
+                updateGrowthChart(btn.getAttribute('data-period'));
+            });
+        });
+        
+        // Load More Button
+        loadMoreBtn.addEventListener('click', () => {
+            // Simulate loading more items
+            loadMoreBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>加载中...';
+            
+            setTimeout(() => {
+                loadMoreBtn.innerHTML = '加载更多 <i class="fa fa-angle-down ml-2"></i>';
+                // Here you would typically load more content via AJAX
+                alert('已加载全部内容');
+            }, 1500);
+        });
+        
+        // Add Note Form Submission
+        addNoteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('note-title').value;
+            const content = document.getElementById('note-content').value;
+            const category = document.getElementById('note-category').value;
+            const time = document.getElementById('note-time').value;
+            const tags = document.getElementById('note-tags').value;
+            
+            // Validate form
+            if (!title || !content) {
+                alert('请填写标题和内容');
+                return;
+            }
+            
+            // Here you would typically save the note to a database
+            console.log('New Note:', { title, content, category, time, tags });
+            
+            // Show success message
+            alert('灵感记录成功！');
+            
+            // Close modal and reset form
+            addNoteModal.classList.add('hidden');
+            addNoteForm.reset();
+            
+            // Optionally, update the UI with the new note
+            // This would depend on where you want to display the new note
+        });
+        
+        // Growth Chart
+        let growthChart;
+        
+        function initGrowthChart() {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            
+            growthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    datasets: [{
+                        label: '创作数量',
+                        data: [3, 5, 2, 8, 4, 6, 7],
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            titleColor: '#1e293b',
+                            bodyColor: '#1e293b',
+                            borderColor: 'rgba(99, 102, 241, 0.2)',
+                            borderWidth: 1,
+                            padding: 12,
+                            boxPadding: 6,
+                            usePointStyle: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return `创作数量: ${context.raw}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateGrowthChart(period) {
+            let labels, data;
+            
+            switch (period) {
+                case 'week':
+                    labels = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+                    data = [3, 5, 2, 8, 4, 6, 7];
+                    break;
+                case 'month':
+                    labels = ['第1周', '第2周', '第3周', '第4周'];
+                    data = [15, 22, 18, 25];
+                    break;
+                case 'year':
+                    labels = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+                    data = [45, 52, 48, 60, 55, 70, 65, 75, 80, 85, 90, 95];
+                    break;
+            }
+            
+            growthChart.data.labels = labels;
+            growthChart.data.datasets[0].data = data;
+            growthChart.update();
+        }
+        
+        // Category Chart
+        function initCategoryChart() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['灵感', '笔记', '思考', '设计', '写作', '编程', '旅行'],
+                    datasets: [{
+                        data: [25, 20, 15, 12, 10, 8, 10],
+                        backgroundColor: [
+                            'rgba(99, 102, 241, 0.8)',
+                            'rgba(244, 63, 94, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(234, 179, 8, 0.8)',
+                            'rgba(236, 72, 153, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(99, 102, 241, 1)',
+                            'rgba(244, 63, 94, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(139, 92, 246, 1)',
+                            'rgba(234, 179, 8, 1)',
+                            'rgba(236, 72, 153, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 20,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            titleColor: '#1e293b',
+                            bodyColor: '#1e293b',
+                            borderColor: 'rgba(99, 102, 241, 0.2)',
+                            borderWidth: 1,
+                            padding: 12,
+                            boxPadding: 6,
+                            usePointStyle: true,
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${context.label}: ${percentage}% (${value})`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+        
+        // Initialize Charts
+        window.addEventListener('load', () => {
+            initGrowthChart();
+            initCategoryChart();
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
